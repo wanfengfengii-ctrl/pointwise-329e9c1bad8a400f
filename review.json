@@ -1,0 +1,3424 @@
+{
+  "cases": [
+    {
+      "batches": [
+        {
+          "changes": [
+            [
+              "sites",
+              "s1",
+              1,
+              [
+                "A",
+                "east"
+              ]
+            ]
+          ],
+          "id": "dimensions"
+        },
+        {
+          "changes": [
+            [
+              "readings",
+              "r1",
+              1,
+              [
+                "A",
+                "d1",
+                10
+              ]
+            ]
+          ],
+          "id": "first"
+        },
+        {
+          "changes": [
+            [
+              "readings",
+              "r2",
+              1,
+              [
+                "A",
+                "d1",
+                7
+              ]
+            ]
+          ],
+          "id": "second"
+        },
+        {
+          "changes": [
+            [
+              "readings",
+              "r1",
+              2,
+              [
+                "A",
+                "d1",
+                12
+              ]
+            ]
+          ],
+          "id": "correct"
+        }
+      ],
+      "expected": [
+        [],
+        [
+          [
+            [
+              "d1",
+              "east",
+              10,
+              1,
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              "d1",
+              "east",
+              17,
+              2,
+              2
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              "d1",
+              "east",
+              19,
+              2,
+              2
+            ],
+            1
+          ]
+        ]
+      ],
+      "expected_deltas": [
+        [],
+        [
+          [
+            [
+              "d1",
+              "east",
+              10,
+              1,
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              "d1",
+              "east",
+              10,
+              1,
+              1
+            ],
+            -1
+          ],
+          [
+            [
+              "d1",
+              "east",
+              17,
+              2,
+              2
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              "d1",
+              "east",
+              17,
+              2,
+              2
+            ],
+            -1
+          ],
+          [
+            [
+              "d1",
+              "east",
+              19,
+              2,
+              2
+            ],
+            1
+          ]
+        ]
+      ],
+      "id": "C1-normal-recorded-business",
+      "locations": [
+        "store.py:114",
+        "ivm.py:33",
+        "rel.py:78"
+      ],
+      "note": "Recorded NORMAL business history with reconstruction after every batch: left join, grouping and revision replacement all agree when no support boundary is crossed.",
+      "observed": [
+        [],
+        [
+          [
+            [
+              "d1",
+              "east",
+              10,
+              1,
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              "d1",
+              "east",
+              17,
+              2,
+              2
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              "d1",
+              "east",
+              19,
+              2,
+              2
+            ],
+            1
+          ]
+        ]
+      ],
+      "plan": {
+        "nodes": [
+          {
+            "id": "readings",
+            "op": "source",
+            "types": [
+              "s",
+              "s",
+              "i"
+            ]
+          },
+          {
+            "id": "sites",
+            "op": "source",
+            "types": [
+              "s",
+              "s"
+            ]
+          },
+          {
+            "id": "enriched",
+            "left": "readings",
+            "on": [
+              [
+                0,
+                0
+              ]
+            ],
+            "op": "left",
+            "right": "sites"
+          },
+          {
+            "having": null,
+            "id": "daily",
+            "input": "enriched",
+            "keys": [
+              1,
+              4
+            ],
+            "op": "group",
+            "value": 2
+          }
+        ],
+        "root": "daily"
+      },
+      "receipts": [
+        {
+          "delta": [],
+          "generation": 1
+        },
+        {
+          "delta": [
+            [
+              [
+                "d1",
+                "east",
+                10,
+                1,
+                1
+              ],
+              1
+            ]
+          ],
+          "generation": 2
+        },
+        {
+          "delta": [
+            [
+              [
+                "d1",
+                "east",
+                10,
+                1,
+                1
+              ],
+              -1
+            ],
+            [
+              [
+                "d1",
+                "east",
+                17,
+                2,
+                2
+              ],
+              1
+            ]
+          ],
+          "generation": 3
+        },
+        {
+          "delta": [
+            [
+              [
+                "d1",
+                "east",
+                17,
+                2,
+                2
+              ],
+              -1
+            ],
+            [
+              [
+                "d1",
+                "east",
+                19,
+                2,
+                2
+              ],
+              1
+            ]
+          ],
+          "generation": 4
+        }
+      ],
+      "reopen_after": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "status": "control"
+    },
+    {
+      "batches": [
+        {
+          "changes": [
+            [
+              "s",
+              "r1",
+              1,
+              [
+                5
+              ]
+            ]
+          ],
+          "id": "b1"
+        },
+        {
+          "changes": [
+            [
+              "s",
+              "r2",
+              1,
+              [
+                5
+              ]
+            ]
+          ],
+          "id": "b2"
+        },
+        {
+          "changes": [
+            [
+              "s",
+              "r3",
+              1,
+              [
+                7
+              ]
+            ]
+          ],
+          "id": "b3"
+        }
+      ],
+      "expected": [
+        [
+          [
+            [
+              5
+            ],
+            2
+          ]
+        ],
+        [
+          [
+            [
+              5
+            ],
+            4
+          ]
+        ],
+        [
+          [
+            [
+              5
+            ],
+            4
+          ],
+          [
+            [
+              7
+            ],
+            2
+          ]
+        ]
+      ],
+      "expected_deltas": [
+        [
+          [
+            [
+              5
+            ],
+            2
+          ]
+        ],
+        [
+          [
+            [
+              5
+            ],
+            2
+          ]
+        ],
+        [
+          [
+            [
+              7
+            ],
+            2
+          ]
+        ]
+      ],
+      "id": "C2-shared-subplan-union",
+      "locations": [
+        "ivm.py:53",
+        "ivm.py:72",
+        "store.py:115"
+      ],
+      "note": "One child feeds two union edges: shared subplan propagation keeps multiplicities exact through duplicate source rows.",
+      "observed": [
+        [
+          [
+            [
+              5
+            ],
+            2
+          ]
+        ],
+        [
+          [
+            [
+              5
+            ],
+            4
+          ]
+        ],
+        [
+          [
+            [
+              5
+            ],
+            4
+          ],
+          [
+            [
+              7
+            ],
+            2
+          ]
+        ]
+      ],
+      "plan": {
+        "nodes": [
+          {
+            "id": "s",
+            "op": "source",
+            "types": [
+              "i"
+            ]
+          },
+          {
+            "cols": [
+              0
+            ],
+            "id": "p",
+            "input": "s",
+            "op": "project"
+          },
+          {
+            "id": "u",
+            "inputs": [
+              "p",
+              "p"
+            ],
+            "op": "union"
+          }
+        ],
+        "root": "u"
+      },
+      "receipts": [
+        {
+          "delta": [
+            [
+              [
+                5
+              ],
+              2
+            ]
+          ],
+          "generation": 1
+        },
+        {
+          "delta": [
+            [
+              [
+                5
+              ],
+              2
+            ]
+          ],
+          "generation": 2
+        },
+        {
+          "delta": [
+            [
+              [
+                7
+              ],
+              2
+            ]
+          ],
+          "generation": 3
+        }
+      ],
+      "reopen_after": [
+        1
+      ],
+      "status": "control"
+    },
+    {
+      "batches": [
+        {
+          "changes": [
+            [
+              "s",
+              "r1",
+              1,
+              [
+                null
+              ]
+            ],
+            [
+              "t",
+              "r1",
+              1,
+              [
+                null
+              ]
+            ]
+          ],
+          "id": "b1"
+        },
+        {
+          "changes": [
+            [
+              "s",
+              "r2",
+              1,
+              [
+                1
+              ]
+            ],
+            [
+              "s",
+              "r3",
+              1,
+              [
+                null
+              ]
+            ]
+          ],
+          "id": "b2"
+        },
+        {
+          "changes": [
+            [
+              "t",
+              "r2",
+              1,
+              [
+                2
+              ]
+            ]
+          ],
+          "id": "b3"
+        },
+        {
+          "changes": [
+            [
+              "t",
+              "r3",
+              1,
+              [
+                null
+              ]
+            ]
+          ],
+          "id": "b4"
+        },
+        {
+          "changes": [
+            [
+              "s",
+              "r4",
+              1,
+              [
+                2
+              ]
+            ]
+          ],
+          "id": "b5"
+        }
+      ],
+      "expected": [
+        [
+          [
+            [
+              null,
+              null
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              null
+            ],
+            1
+          ],
+          [
+            [
+              null,
+              null
+            ],
+            2
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              null
+            ],
+            1
+          ],
+          [
+            [
+              null,
+              null
+            ],
+            2
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              null
+            ],
+            1
+          ],
+          [
+            [
+              null,
+              null
+            ],
+            2
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              null
+            ],
+            1
+          ],
+          [
+            [
+              2,
+              2
+            ],
+            1
+          ],
+          [
+            [
+              null,
+              null
+            ],
+            2
+          ]
+        ]
+      ],
+      "expected_deltas": [
+        [
+          [
+            [
+              null,
+              null
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              null
+            ],
+            1
+          ],
+          [
+            [
+              null,
+              null
+            ],
+            1
+          ]
+        ],
+        [],
+        [],
+        [
+          [
+            [
+              2,
+              2
+            ],
+            1
+          ]
+        ]
+      ],
+      "id": "C3-null-join-keys",
+      "locations": [
+        "rel.py:46",
+        "rel.py:47",
+        "ivm.py:46"
+      ],
+      "note": "NULL never equals NULL: null-key left rows stay padded and anti-kept, duplicate nulls never match, and a non-null key only flips when an equality actually holds. No padding boundary is crossed by a right change, so the outer-join retraction defect cannot mask the NULL semantics.",
+      "observed": [
+        [
+          [
+            [
+              null,
+              null
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              null
+            ],
+            1
+          ],
+          [
+            [
+              null,
+              null
+            ],
+            2
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              null
+            ],
+            1
+          ],
+          [
+            [
+              null,
+              null
+            ],
+            2
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              null
+            ],
+            1
+          ],
+          [
+            [
+              null,
+              null
+            ],
+            2
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              null
+            ],
+            1
+          ],
+          [
+            [
+              2,
+              2
+            ],
+            1
+          ],
+          [
+            [
+              null,
+              null
+            ],
+            2
+          ]
+        ]
+      ],
+      "plan": {
+        "nodes": [
+          {
+            "id": "s",
+            "op": "source",
+            "types": [
+              "i"
+            ]
+          },
+          {
+            "id": "t",
+            "op": "source",
+            "types": [
+              "i"
+            ]
+          },
+          {
+            "id": "a",
+            "left": "s",
+            "on": [
+              [
+                0,
+                0
+              ]
+            ],
+            "op": "anti",
+            "right": "t"
+          },
+          {
+            "id": "lj",
+            "left": "s",
+            "on": [
+              [
+                0,
+                0
+              ]
+            ],
+            "op": "left",
+            "right": "t"
+          }
+        ],
+        "root": "lj"
+      },
+      "receipts": [
+        {
+          "delta": [
+            [
+              [
+                null,
+                null
+              ],
+              1
+            ]
+          ],
+          "generation": 1
+        },
+        {
+          "delta": [
+            [
+              [
+                1,
+                null
+              ],
+              1
+            ],
+            [
+              [
+                null,
+                null
+              ],
+              1
+            ]
+          ],
+          "generation": 2
+        },
+        {
+          "delta": [],
+          "generation": 3
+        },
+        {
+          "delta": [],
+          "generation": 4
+        },
+        {
+          "delta": [
+            [
+              [
+                2,
+                2
+              ],
+              1
+            ]
+          ],
+          "generation": 5
+        }
+      ],
+      "reopen_after": [
+        3
+      ],
+      "status": "control"
+    },
+    {
+      "batches": [
+        {
+          "changes": [
+            [
+              "s",
+              "r1",
+              1,
+              [
+                null,
+                5
+              ]
+            ],
+            [
+              "s",
+              "r2",
+              1,
+              [
+                null,
+                -5
+              ]
+            ],
+            [
+              "s",
+              "r3",
+              1,
+              [
+                1,
+                null
+              ]
+            ]
+          ],
+          "id": "b1"
+        },
+        {
+          "changes": [
+            [
+              "s",
+              "r4",
+              1,
+              [
+                1,
+                null
+              ]
+            ]
+          ],
+          "id": "b2"
+        },
+        {
+          "changes": [
+            [
+              "s",
+              "r1",
+              2,
+              null
+            ]
+          ],
+          "id": "b3"
+        },
+        {
+          "changes": [
+            [
+              "s",
+              "r2",
+              2,
+              null
+            ]
+          ],
+          "id": "b4"
+        }
+      ],
+      "expected": [
+        [
+          [
+            [
+              1,
+              null,
+              1,
+              0
+            ],
+            1
+          ],
+          [
+            [
+              null,
+              0,
+              2,
+              2
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              null,
+              2,
+              0
+            ],
+            1
+          ],
+          [
+            [
+              null,
+              0,
+              2,
+              2
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              null,
+              2,
+              0
+            ],
+            1
+          ],
+          [
+            [
+              null,
+              -5,
+              1,
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              null,
+              2,
+              0
+            ],
+            1
+          ]
+        ]
+      ],
+      "expected_deltas": [
+        [
+          [
+            [
+              1,
+              null,
+              1,
+              0
+            ],
+            1
+          ],
+          [
+            [
+              null,
+              0,
+              2,
+              2
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              null,
+              1,
+              0
+            ],
+            -1
+          ],
+          [
+            [
+              1,
+              null,
+              2,
+              0
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              null,
+              -5,
+              1,
+              1
+            ],
+            1
+          ],
+          [
+            [
+              null,
+              0,
+              2,
+              2
+            ],
+            -1
+          ]
+        ],
+        [
+          [
+            [
+              null,
+              -5,
+              1,
+              1
+            ],
+            -1
+          ]
+        ]
+      ],
+      "id": "B3-null-key-zero-sum-group",
+      "locations": [
+        "ivm.py:14",
+        "ivm.py:21",
+        "rel.py:61"
+      ],
+      "note": "NULL grouping keys coalesce; a zero SUM with nonzero COUNT is a real group; all-NULL value rows feed COUNT(*) but leave SUM NULL.",
+      "observed": [
+        [
+          [
+            [
+              1,
+              null,
+              1,
+              0
+            ],
+            1
+          ],
+          [
+            [
+              null,
+              0,
+              2,
+              2
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              null,
+              2,
+              0
+            ],
+            1
+          ],
+          [
+            [
+              null,
+              0,
+              2,
+              2
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              null,
+              2,
+              0
+            ],
+            1
+          ],
+          [
+            [
+              null,
+              -5,
+              1,
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              null,
+              2,
+              0
+            ],
+            1
+          ]
+        ]
+      ],
+      "plan": {
+        "nodes": [
+          {
+            "id": "s",
+            "op": "source",
+            "types": [
+              "i",
+              "i"
+            ]
+          },
+          {
+            "having": null,
+            "id": "g",
+            "input": "s",
+            "keys": [
+              0
+            ],
+            "op": "group",
+            "value": 1
+          }
+        ],
+        "root": "g"
+      },
+      "receipts": [
+        {
+          "delta": [
+            [
+              [
+                1,
+                null,
+                1,
+                0
+              ],
+              1
+            ],
+            [
+              [
+                null,
+                0,
+                2,
+                2
+              ],
+              1
+            ]
+          ],
+          "generation": 1
+        },
+        {
+          "delta": [
+            [
+              [
+                1,
+                null,
+                1,
+                0
+              ],
+              -1
+            ],
+            [
+              [
+                1,
+                null,
+                2,
+                0
+              ],
+              1
+            ]
+          ],
+          "generation": 2
+        },
+        {
+          "delta": [
+            [
+              [
+                null,
+                -5,
+                1,
+                1
+              ],
+              1
+            ],
+            [
+              [
+                null,
+                0,
+                2,
+                2
+              ],
+              -1
+            ]
+          ],
+          "generation": 3
+        },
+        {
+          "delta": [
+            [
+              [
+                null,
+                -5,
+                1,
+                1
+              ],
+              -1
+            ]
+          ],
+          "generation": 4
+        }
+      ],
+      "reopen_after": [
+        0,
+        3
+      ],
+      "status": "control"
+    },
+    {
+      "batches": [
+        {
+          "changes": [
+            [
+              "s",
+              "r1",
+              1,
+              [
+                5
+              ]
+            ]
+          ],
+          "id": "insert"
+        },
+        {
+          "changes": [
+            [
+              "s",
+              "r1",
+              2,
+              null
+            ]
+          ],
+          "id": "delete"
+        },
+        {
+          "changes": [
+            [
+              "s",
+              "r1",
+              3,
+              [
+                5
+              ]
+            ]
+          ],
+          "id": "revive"
+        },
+        {
+          "changes": [],
+          "id": "noop"
+        }
+      ],
+      "expected": [
+        [
+          [
+            [
+              5
+            ],
+            1
+          ]
+        ],
+        [],
+        [
+          [
+            [
+              5
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              5
+            ],
+            1
+          ]
+        ]
+      ],
+      "expected_deltas": [
+        [
+          [
+            [
+              5
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              5
+            ],
+            -1
+          ]
+        ],
+        [
+          [
+            [
+              5
+            ],
+            1
+          ]
+        ],
+        []
+      ],
+      "id": "C5-tombstone-revive-receipt",
+      "locations": [
+        "store.py:84",
+        "store.py:88",
+        "store.py:119"
+      ],
+      "note": "Tombstone then later revision revives a record through the filter; an empty batch still advances generation with an empty delta. Receipt replay idempotency for a repeated batch id is asserted separately in checks.py (a replayed receipt carries the original generation and therefore cannot equal a zero net delta).",
+      "observed": [
+        [
+          [
+            [
+              5
+            ],
+            1
+          ]
+        ],
+        [],
+        [
+          [
+            [
+              5
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              5
+            ],
+            1
+          ]
+        ]
+      ],
+      "plan": {
+        "nodes": [
+          {
+            "id": "s",
+            "op": "source",
+            "types": [
+              "i"
+            ]
+          },
+          {
+            "id": "f",
+            "input": "s",
+            "op": "filter",
+            "where": [
+              "gt",
+              [
+                "col",
+                0
+              ],
+              [
+                "lit",
+                0
+              ]
+            ]
+          }
+        ],
+        "root": "f"
+      },
+      "receipts": [
+        {
+          "delta": [
+            [
+              [
+                5
+              ],
+              1
+            ]
+          ],
+          "generation": 1
+        },
+        {
+          "delta": [
+            [
+              [
+                5
+              ],
+              -1
+            ]
+          ],
+          "generation": 2
+        },
+        {
+          "delta": [
+            [
+              [
+                5
+              ],
+              1
+            ]
+          ],
+          "generation": 3
+        },
+        {
+          "delta": [],
+          "generation": 4
+        }
+      ],
+      "reopen_after": [
+        2
+      ],
+      "status": "control"
+    },
+    {
+      "batches": [
+        {
+          "changes": [
+            [
+              "readings",
+              "r1",
+              1,
+              [
+                "A",
+                "d1",
+                10
+              ]
+            ]
+          ],
+          "id": "arrival"
+        },
+        {
+          "changes": [
+            [
+              "sites",
+              "s1",
+              1,
+              [
+                "A",
+                "east"
+              ]
+            ]
+          ],
+          "id": "late-dimension"
+        }
+      ],
+      "expected": [
+        [
+          [
+            [
+              "d1",
+              null,
+              10,
+              1,
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              "d1",
+              "east",
+              10,
+              1,
+              1
+            ],
+            1
+          ]
+        ]
+      ],
+      "expected_deltas": [
+        [
+          [
+            [
+              "d1",
+              null,
+              10,
+              1,
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              "d1",
+              "east",
+              10,
+              1,
+              1
+            ],
+            1
+          ],
+          [
+            [
+              "d1",
+              null,
+              10,
+              1,
+              1
+            ],
+            -1
+          ]
+        ]
+      ],
+      "id": "M1-incident-late-dimension",
+      "locations": [
+        "ivm.py:50",
+        "ivm.py:51",
+        "rel.py:57"
+      ],
+      "note": "Recorded incident: right-side first match must retract the padded left row; the engine adds the matched group but never retracts the NULL extension.",
+      "observed": [
+        [
+          [
+            [
+              "d1",
+              null,
+              10,
+              1,
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              "d1",
+              "east",
+              10,
+              1,
+              1
+            ],
+            1
+          ],
+          [
+            [
+              "d1",
+              null,
+              10,
+              1,
+              1
+            ],
+            1
+          ]
+        ]
+      ],
+      "plan": {
+        "nodes": [
+          {
+            "id": "readings",
+            "op": "source",
+            "types": [
+              "s",
+              "s",
+              "i"
+            ]
+          },
+          {
+            "id": "sites",
+            "op": "source",
+            "types": [
+              "s",
+              "s"
+            ]
+          },
+          {
+            "id": "enriched",
+            "left": "readings",
+            "on": [
+              [
+                0,
+                0
+              ]
+            ],
+            "op": "left",
+            "right": "sites"
+          },
+          {
+            "having": null,
+            "id": "daily",
+            "input": "enriched",
+            "keys": [
+              1,
+              4
+            ],
+            "op": "group",
+            "value": 2
+          }
+        ],
+        "root": "daily"
+      },
+      "receipts": [
+        {
+          "delta": [
+            [
+              [
+                "d1",
+                null,
+                10,
+                1,
+                1
+              ],
+              1
+            ]
+          ],
+          "generation": 1
+        },
+        {
+          "delta": [
+            [
+              [
+                "d1",
+                "east",
+                10,
+                1,
+                1
+              ],
+              1
+            ]
+          ],
+          "generation": 2
+        }
+      ],
+      "reopen_after": [
+        0,
+        1
+      ],
+      "status": "mismatch"
+    },
+    {
+      "batches": [
+        {
+          "changes": [
+            [
+              "s",
+              "r1",
+              1,
+              [
+                1
+              ]
+            ]
+          ],
+          "id": "b1"
+        },
+        {
+          "changes": [
+            [
+              "t",
+              "r1",
+              1,
+              [
+                1
+              ]
+            ]
+          ],
+          "id": "b2"
+        },
+        {
+          "changes": [
+            [
+              "t",
+              "r1",
+              2,
+              null
+            ]
+          ],
+          "id": "b3"
+        }
+      ],
+      "expected": [
+        [
+          [
+            [
+              1
+            ],
+            1
+          ]
+        ],
+        [],
+        [
+          [
+            [
+              1
+            ],
+            1
+          ]
+        ]
+      ],
+      "expected_deltas": [
+        [
+          [
+            [
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1
+            ],
+            -1
+          ]
+        ],
+        [
+          [
+            [
+              1
+            ],
+            1
+          ]
+        ]
+      ],
+      "id": "M2-anti-right-only-change",
+      "locations": [
+        "ivm.py:43",
+        "ivm.py:47",
+        "ivm.py:48"
+      ],
+      "note": "Anti join ignores right deltas entirely: right-only insert/delete flips existence but the anti bag never changes, including after SQLite reconstruction.",
+      "observed": [
+        [
+          [
+            [
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1
+            ],
+            1
+          ]
+        ]
+      ],
+      "plan": {
+        "nodes": [
+          {
+            "id": "s",
+            "op": "source",
+            "types": [
+              "i"
+            ]
+          },
+          {
+            "id": "t",
+            "op": "source",
+            "types": [
+              "i"
+            ]
+          },
+          {
+            "id": "a",
+            "left": "s",
+            "on": [
+              [
+                0,
+                0
+              ]
+            ],
+            "op": "anti",
+            "right": "t"
+          }
+        ],
+        "root": "a"
+      },
+      "receipts": [
+        {
+          "delta": [
+            [
+              [
+                1
+              ],
+              1
+            ]
+          ],
+          "generation": 1
+        },
+        {
+          "delta": [],
+          "generation": 2
+        },
+        {
+          "delta": [],
+          "generation": 3
+        }
+      ],
+      "reopen_after": [
+        0,
+        2
+      ],
+      "status": "mismatch"
+    },
+    {
+      "batches": [
+        {
+          "changes": [
+            [
+              "s",
+              "r1",
+              1,
+              [
+                1
+              ]
+            ]
+          ],
+          "id": "b1"
+        },
+        {
+          "changes": [
+            [
+              "t",
+              "r1",
+              1,
+              [
+                1
+              ]
+            ],
+            [
+              "s",
+              "r2",
+              1,
+              [
+                1
+              ]
+            ]
+          ],
+          "id": "b2"
+        }
+      ],
+      "expected": [
+        [],
+        [
+          [
+            [
+              1,
+              1
+            ],
+            2
+          ]
+        ]
+      ],
+      "expected_deltas": [
+        [],
+        [
+          [
+            [
+              1,
+              1
+            ],
+            2
+          ]
+        ]
+      ],
+      "id": "M3-inner-both-sides-same-batch",
+      "locations": [
+        "ivm.py:50",
+        "ivm.py:51"
+      ],
+      "note": "Both join inputs change in one batch: the da x db cross pair is counted twice because both contributions use the new opposite bag.",
+      "observed": [
+        [],
+        [
+          [
+            [
+              1,
+              1
+            ],
+            3
+          ]
+        ]
+      ],
+      "plan": {
+        "nodes": [
+          {
+            "id": "s",
+            "op": "source",
+            "types": [
+              "i"
+            ]
+          },
+          {
+            "id": "t",
+            "op": "source",
+            "types": [
+              "i"
+            ]
+          },
+          {
+            "id": "j",
+            "left": "s",
+            "on": [
+              [
+                0,
+                0
+              ]
+            ],
+            "op": "inner",
+            "right": "t"
+          }
+        ],
+        "root": "j"
+      },
+      "receipts": [
+        {
+          "delta": [],
+          "generation": 1
+        },
+        {
+          "delta": [
+            [
+              [
+                1,
+                1
+              ],
+              3
+            ]
+          ],
+          "generation": 2
+        }
+      ],
+      "reopen_after": [
+        1
+      ],
+      "status": "mismatch"
+    },
+    {
+      "batches": [
+        {
+          "changes": [
+            [
+              "s",
+              "r1",
+              1,
+              [
+                1
+              ]
+            ]
+          ],
+          "id": "b1"
+        },
+        {
+          "changes": [
+            [
+              "s",
+              "r2",
+              1,
+              [
+                1
+              ]
+            ]
+          ],
+          "id": "b2"
+        },
+        {
+          "changes": [
+            [
+              "s",
+              "r1",
+              2,
+              null
+            ]
+          ],
+          "id": "b3"
+        }
+      ],
+      "expected": [
+        [
+          [
+            [
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1
+            ],
+            1
+          ]
+        ]
+      ],
+      "expected_deltas": [
+        [
+          [
+            [
+              1
+            ],
+            1
+          ]
+        ],
+        [],
+        []
+      ],
+      "id": "M4-distinct-support-count",
+      "locations": [
+        "ivm.py:65",
+        "ivm.py:66"
+      ],
+      "note": "DISTINCT flips on the sign of each delta instead of a maintained support count: support 2 -> 1 wrongly retracts the row.",
+      "observed": [
+        [
+          [
+            [
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1
+            ],
+            2
+          ]
+        ],
+        [
+          [
+            [
+              1
+            ],
+            1
+          ]
+        ]
+      ],
+      "plan": {
+        "nodes": [
+          {
+            "id": "s",
+            "op": "source",
+            "types": [
+              "i"
+            ]
+          },
+          {
+            "id": "d",
+            "input": "s",
+            "op": "distinct"
+          }
+        ],
+        "root": "d"
+      },
+      "receipts": [
+        {
+          "delta": [
+            [
+              [
+                1
+              ],
+              1
+            ]
+          ],
+          "generation": 1
+        },
+        {
+          "delta": [
+            [
+              [
+                1
+              ],
+              1
+            ]
+          ],
+          "generation": 2
+        },
+        {
+          "delta": [
+            [
+              [
+                1
+              ],
+              -1
+            ]
+          ],
+          "generation": 3
+        }
+      ],
+      "reopen_after": [
+        1
+      ],
+      "status": "mismatch"
+    },
+    {
+      "batches": [
+        {
+          "changes": [
+            [
+              "s",
+              "r1",
+              1,
+              [
+                1,
+                5
+              ]
+            ]
+          ],
+          "id": "b1"
+        },
+        {
+          "changes": [
+            [
+              "s",
+              "r2",
+              1,
+              [
+                1,
+                -10
+              ]
+            ]
+          ],
+          "id": "b2"
+        },
+        {
+          "changes": [
+            [
+              "s",
+              "r3",
+              1,
+              [
+                1,
+                20
+              ]
+            ]
+          ],
+          "id": "b3"
+        }
+      ],
+      "expected": [
+        [
+          [
+            [
+              1,
+              5,
+              1,
+              1
+            ],
+            1
+          ]
+        ],
+        [],
+        [
+          [
+            [
+              1,
+              15,
+              3,
+              3
+            ],
+            1
+          ]
+        ]
+      ],
+      "expected_deltas": [
+        [
+          [
+            [
+              1,
+              5,
+              1,
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              5,
+              1,
+              1
+            ],
+            -1
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              15,
+              3,
+              3
+            ],
+            1
+          ]
+        ]
+      ],
+      "id": "M5-having-group-state-lost",
+      "locations": [
+        "ivm.py:16",
+        "ivm.py:29",
+        "ivm.py:30"
+      ],
+      "note": "HAVING-suppressed groups persist no accumulators: when the group becomes visible again SUM/COUNT restart from only the new delta.",
+      "observed": [
+        [
+          [
+            [
+              1,
+              5,
+              1,
+              1
+            ],
+            1
+          ]
+        ],
+        [],
+        [
+          [
+            [
+              1,
+              20,
+              1,
+              1
+            ],
+            1
+          ]
+        ]
+      ],
+      "plan": {
+        "nodes": [
+          {
+            "id": "s",
+            "op": "source",
+            "types": [
+              "i",
+              "i"
+            ]
+          },
+          {
+            "having": 0,
+            "id": "g",
+            "input": "s",
+            "keys": [
+              0
+            ],
+            "op": "group",
+            "value": 1
+          }
+        ],
+        "root": "g"
+      },
+      "receipts": [
+        {
+          "delta": [
+            [
+              [
+                1,
+                5,
+                1,
+                1
+              ],
+              1
+            ]
+          ],
+          "generation": 1
+        },
+        {
+          "delta": [
+            [
+              [
+                1,
+                5,
+                1,
+                1
+              ],
+              -1
+            ]
+          ],
+          "generation": 2
+        },
+        {
+          "delta": [
+            [
+              [
+                1,
+                20,
+                1,
+                1
+              ],
+              1
+            ]
+          ],
+          "generation": 3
+        }
+      ],
+      "reopen_after": [
+        1
+      ],
+      "status": "mismatch"
+    },
+    {
+      "batches": [
+        {
+          "changes": [],
+          "id": "noop"
+        },
+        {
+          "changes": [
+            [
+              "s",
+              "r1",
+              1,
+              [
+                5
+              ]
+            ]
+          ],
+          "id": "b2"
+        },
+        {
+          "changes": [
+            [
+              "s",
+              "r1",
+              2,
+              null
+            ]
+          ],
+          "id": "b3"
+        }
+      ],
+      "expected": [
+        [
+          [
+            [
+              null,
+              0,
+              0
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              5,
+              1,
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              null,
+              0,
+              0
+            ],
+            1
+          ]
+        ]
+      ],
+      "expected_deltas": [
+        [],
+        [
+          [
+            [
+              5,
+              1,
+              1
+            ],
+            1
+          ],
+          [
+            [
+              null,
+              0,
+              0
+            ],
+            -1
+          ]
+        ],
+        [
+          [
+            [
+              5,
+              1,
+              1
+            ],
+            -1
+          ],
+          [
+            [
+              null,
+              0,
+              0
+            ],
+            1
+          ]
+        ]
+      ],
+      "id": "M6-global-group-vanishes-on-empty",
+      "locations": [
+        "ivm.py:19",
+        "ivm.py:26",
+        "ivm.py:27"
+      ],
+      "note": "The keyless global group must always exist as [null,0,0]; when the input empties the engine drops it instead of re-emitting it.",
+      "observed": [
+        [
+          [
+            [
+              null,
+              0,
+              0
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              5,
+              1,
+              1
+            ],
+            1
+          ]
+        ],
+        []
+      ],
+      "plan": {
+        "nodes": [
+          {
+            "id": "s",
+            "op": "source",
+            "types": [
+              "i"
+            ]
+          },
+          {
+            "having": null,
+            "id": "g",
+            "input": "s",
+            "keys": [],
+            "op": "group",
+            "value": 0
+          }
+        ],
+        "root": "g"
+      },
+      "receipts": [
+        {
+          "delta": [],
+          "generation": 1
+        },
+        {
+          "delta": [
+            [
+              [
+                5,
+                1,
+                1
+              ],
+              1
+            ],
+            [
+              [
+                null,
+                0,
+                0
+              ],
+              -1
+            ]
+          ],
+          "generation": 2
+        },
+        {
+          "delta": [
+            [
+              [
+                5,
+                1,
+                1
+              ],
+              -1
+            ]
+          ],
+          "generation": 3
+        }
+      ],
+      "reopen_after": [
+        0,
+        2
+      ],
+      "status": "mismatch"
+    },
+    {
+      "batches": [
+        {
+          "changes": [
+            [
+              "t",
+              "r1",
+              1,
+              [
+                1
+              ]
+            ]
+          ],
+          "id": "b1"
+        },
+        {
+          "changes": [
+            [
+              "s",
+              "r1",
+              1,
+              [
+                1
+              ]
+            ]
+          ],
+          "id": "b2"
+        },
+        {
+          "changes": [
+            [
+              "t",
+              "r1",
+              2,
+              null
+            ]
+          ],
+          "id": "b3"
+        }
+      ],
+      "expected": [
+        [],
+        [
+          [
+            [
+              1,
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              null
+            ],
+            1
+          ]
+        ]
+      ],
+      "expected_deltas": [
+        [],
+        [
+          [
+            [
+              1,
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              1
+            ],
+            -1
+          ],
+          [
+            [
+              1,
+              null
+            ],
+            1
+          ]
+        ]
+      ],
+      "id": "M8-left-pad-not-restored-on-right-delete",
+      "locations": [
+        "ivm.py:51",
+        "rel.py:57",
+        "rel.py:58"
+      ],
+      "note": "Reverse boundary of M1: deleting the last right match must re-add the all-NULL extension; only the matched pair is retracted. The matched baseline is built by inserting the left row after the right, so no earlier defect corrupts the state under test.",
+      "observed": [
+        [],
+        [
+          [
+            [
+              1,
+              1
+            ],
+            1
+          ]
+        ],
+        []
+      ],
+      "plan": {
+        "nodes": [
+          {
+            "id": "s",
+            "op": "source",
+            "types": [
+              "i"
+            ]
+          },
+          {
+            "id": "t",
+            "op": "source",
+            "types": [
+              "i"
+            ]
+          },
+          {
+            "id": "lj",
+            "left": "s",
+            "on": [
+              [
+                0,
+                0
+              ]
+            ],
+            "op": "left",
+            "right": "t"
+          }
+        ],
+        "root": "lj"
+      },
+      "receipts": [
+        {
+          "delta": [],
+          "generation": 1
+        },
+        {
+          "delta": [
+            [
+              [
+                1,
+                1
+              ],
+              1
+            ]
+          ],
+          "generation": 2
+        },
+        {
+          "delta": [
+            [
+              [
+                1,
+                1
+              ],
+              -1
+            ]
+          ],
+          "generation": 3
+        }
+      ],
+      "reopen_after": [
+        1
+      ],
+      "status": "mismatch"
+    },
+    {
+      "batches": [
+        {
+          "changes": [
+            [
+              "t",
+              "r1",
+              1,
+              [
+                1
+              ]
+            ]
+          ],
+          "id": "b1"
+        },
+        {
+          "changes": [
+            [
+              "s",
+              "r1",
+              1,
+              [
+                1
+              ]
+            ]
+          ],
+          "id": "b2"
+        },
+        {
+          "changes": [
+            [
+              "s",
+              "r2",
+              1,
+              [
+                1
+              ]
+            ],
+            [
+              "t",
+              "r1",
+              2,
+              null
+            ]
+          ],
+          "id": "b3"
+        }
+      ],
+      "expected": [
+        [],
+        [
+          [
+            [
+              1,
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              null
+            ],
+            2
+          ]
+        ]
+      ],
+      "expected_deltas": [
+        [],
+        [
+          [
+            [
+              1,
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              1
+            ],
+            -1
+          ],
+          [
+            [
+              1,
+              null
+            ],
+            2
+          ]
+        ]
+      ],
+      "id": "M9-left-same-batch-left-change-right-removal",
+      "locations": [
+        "ivm.py:50",
+        "ivm.py:51",
+        "rel.py:49"
+      ],
+      "note": "Combined-history defect distinct from M3: a changed left row whose right match disappears in the same batch is padded against the new bag, losing the old-occurrence padding flip. The matched baseline is established by left-after-right inserts so the final simultaneous batch is the only batch whose both sides change.",
+      "observed": [
+        [],
+        [
+          [
+            [
+              1,
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              null
+            ],
+            1
+          ]
+        ]
+      ],
+      "plan": {
+        "nodes": [
+          {
+            "id": "s",
+            "op": "source",
+            "types": [
+              "i"
+            ]
+          },
+          {
+            "id": "t",
+            "op": "source",
+            "types": [
+              "i"
+            ]
+          },
+          {
+            "id": "lj",
+            "left": "s",
+            "on": [
+              [
+                0,
+                0
+              ]
+            ],
+            "op": "left",
+            "right": "t"
+          }
+        ],
+        "root": "lj"
+      },
+      "receipts": [
+        {
+          "delta": [],
+          "generation": 1
+        },
+        {
+          "delta": [
+            [
+              [
+                1,
+                1
+              ],
+              1
+            ]
+          ],
+          "generation": 2
+        },
+        {
+          "delta": [
+            [
+              [
+                1,
+                1
+              ],
+              -1
+            ],
+            [
+              [
+                1,
+                null
+              ],
+              1
+            ]
+          ],
+          "generation": 3
+        }
+      ],
+      "reopen_after": [],
+      "status": "mismatch"
+    },
+    {
+      "batches": [
+        {
+          "changes": [
+            [
+              "s",
+              "r1",
+              1,
+              [
+                1
+              ]
+            ]
+          ],
+          "id": "b1"
+        },
+        {
+          "changes": [
+            [
+              "s",
+              "r2",
+              1,
+              [
+                1
+              ]
+            ],
+            [
+              "t",
+              "r1",
+              1,
+              [
+                1
+              ]
+            ]
+          ],
+          "id": "b2"
+        }
+      ],
+      "expected": [
+        [
+          [
+            [
+              1
+            ],
+            1
+          ]
+        ],
+        []
+      ],
+      "expected_deltas": [
+        [
+          [
+            [
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1
+            ],
+            -1
+          ]
+        ]
+      ],
+      "id": "M10-anti-combined-batch",
+      "locations": [
+        "ivm.py:47",
+        "ivm.py:48",
+        "ivm.py:51"
+      ],
+      "note": "In a combined batch the changed-left existence test itself uses the correct new right bag, but the unchanged left occurrence's flip is still lost because db is ignored: isolates the two anti causes.",
+      "observed": [
+        [
+          [
+            [
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1
+            ],
+            1
+          ]
+        ]
+      ],
+      "plan": {
+        "nodes": [
+          {
+            "id": "s",
+            "op": "source",
+            "types": [
+              "i"
+            ]
+          },
+          {
+            "id": "t",
+            "op": "source",
+            "types": [
+              "i"
+            ]
+          },
+          {
+            "id": "a",
+            "left": "s",
+            "on": [
+              [
+                0,
+                0
+              ]
+            ],
+            "op": "anti",
+            "right": "t"
+          }
+        ],
+        "root": "a"
+      },
+      "receipts": [
+        {
+          "delta": [
+            [
+              [
+                1
+              ],
+              1
+            ]
+          ],
+          "generation": 1
+        },
+        {
+          "delta": [],
+          "generation": 2
+        }
+      ],
+      "reopen_after": [],
+      "status": "mismatch"
+    },
+    {
+      "batches": [
+        {
+          "changes": [
+            [
+              "t",
+              "r1",
+              1,
+              [
+                1
+              ]
+            ]
+          ],
+          "id": "b1"
+        },
+        {
+          "changes": [
+            [
+              "s",
+              "r1",
+              1,
+              [
+                1
+              ]
+            ]
+          ],
+          "id": "b2"
+        },
+        {
+          "changes": [
+            [
+              "s",
+              "r2",
+              1,
+              [
+                1
+              ]
+            ]
+          ],
+          "id": "b3"
+        },
+        {
+          "changes": [
+            [
+              "s",
+              "r3",
+              1,
+              [
+                2
+              ]
+            ],
+            [
+              "t",
+              "r3",
+              1,
+              [
+                2
+              ]
+            ]
+          ],
+          "id": "b4"
+        }
+      ],
+      "expected": [
+        [],
+        [
+          [
+            [
+              1,
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              1
+            ],
+            2
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              1
+            ],
+            2
+          ],
+          [
+            [
+              2,
+              2
+            ],
+            1
+          ]
+        ]
+      ],
+      "expected_deltas": [
+        [],
+        [
+          [
+            [
+              1,
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              2,
+              2
+            ],
+            1
+          ]
+        ]
+      ],
+      "id": "M11-shared-self-join-double-count",
+      "locations": [
+        "ivm.py:50",
+        "ivm.py:51",
+        "ivm.py:72"
+      ],
+      "note": "Shared DAG propagation around a join whose right edge is a DISTINCT node: single-side batches confirm correct propagation through the shared node, then the final both-side batch shows the new cross pair double counted because each contribution reads the new opposite bag.",
+      "observed": [
+        [],
+        [
+          [
+            [
+              1,
+              1
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              1
+            ],
+            2
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              1
+            ],
+            2
+          ],
+          [
+            [
+              2,
+              2
+            ],
+            2
+          ]
+        ]
+      ],
+      "plan": {
+        "nodes": [
+          {
+            "id": "s",
+            "op": "source",
+            "types": [
+              "i"
+            ]
+          },
+          {
+            "id": "t",
+            "op": "source",
+            "types": [
+              "i"
+            ]
+          },
+          {
+            "id": "d",
+            "input": "t",
+            "op": "distinct"
+          },
+          {
+            "id": "j",
+            "left": "s",
+            "on": [
+              [
+                0,
+                0
+              ]
+            ],
+            "op": "inner",
+            "right": "d"
+          }
+        ],
+        "root": "j"
+      },
+      "receipts": [
+        {
+          "delta": [],
+          "generation": 1
+        },
+        {
+          "delta": [
+            [
+              [
+                1,
+                1
+              ],
+              1
+            ]
+          ],
+          "generation": 2
+        },
+        {
+          "delta": [
+            [
+              [
+                1,
+                1
+              ],
+              1
+            ]
+          ],
+          "generation": 3
+        },
+        {
+          "delta": [
+            [
+              [
+                2,
+                2
+              ],
+              2
+            ]
+          ],
+          "generation": 4
+        }
+      ],
+      "reopen_after": [
+        1
+      ],
+      "status": "mismatch"
+    }
+  ],
+  "verdict": "block"
+}
